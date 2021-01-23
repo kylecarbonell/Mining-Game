@@ -19,5 +19,4 @@ int main()
             }
     }while (play != 0);
     cout << "Thanks for playing!" << endl;
-    cout << " hi" << endl;
 }
