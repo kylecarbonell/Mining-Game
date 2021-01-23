@@ -18,5 +18,6 @@ int main()
                 checkBackpack();
             }
     }while (play != 0);
-    cout << "Thanks for playing!" << endl;;
+    cout << "Thanks for playing!" << endl;
+    cout << " hi" << endl;
 }
