@@ -72,7 +72,7 @@ void mining()
                                 Sleep(500);
                                 cout << "You found dirt" << endl;
                                 cout << endl;
-                                dirt++;
+                                get<2> (dirt)++;
 
                             }
                             else if (treasure == 1 || treasure == 4 || treasure == 7)
@@ -80,7 +80,7 @@ void mining()
                                 Sleep (1000);
                                 cout << "You found a nugget of gold!" << endl;
                                 cout << endl;
-                                goldNugget++;
+                                get<2>(goldNugget)++;
 
                             }
                             else if (treasure == 2 || treasure == 5 || treasure == 9)
@@ -90,7 +90,7 @@ void mining()
                                 Sleep (2000);
                                 cout << "You found a pack of gold!" << endl;
                                 cout << endl;
-                                gold++;
+                                get<2>(gold)++;
                             }
                             else 
                             {
@@ -99,20 +99,20 @@ void mining()
                                 Sleep(2000);
                                 cout << "Its a diamond!!" <<endl;
                                 cout << endl;
-                                diamond++;
+                                get<2>(diamond)++;
                             }
                         } 
                         energy = (energy - (usePick*10));
                         cout << "You have : " << energy << " energy left" << endl;
                         cout << endl;
 
-                        cout << "You found : " << dirt << " chunks of dirt." << endl;
-                        cout << "You found : " << goldNugget << " pieces of gold nuggets." << endl;
-                        cout << "You found : " << gold << " chunks of gold." << endl;
+                        cout << "You found : " << get<2>(dirt) << " chunks of dirt." << endl;
+                        cout << "You found : " << get<2>(goldNugget) << " pieces of gold nuggets." << endl;
+                        cout << "You found : " << get<2>(gold) << " chunks of gold." << endl;
 
-                        if (diamond > 0)
+                        if (get<2>(diamond) > 0)
                         {
-                            cout << "You found : " << diamond << " shiny diamonds" << endl;
+                            cout << "You found : " << get<2>(diamond) << " shiny diamonds" << endl;
                         } 
                     }
                 } 
@@ -164,7 +164,7 @@ void mining()
                                 Sleep(500);
                                 cout << "You found dirt" << endl;
                                 cout << endl;
-                                dirt++;
+                                get<2>(dirt)++;
 
                             }
                             else if (treasure == 1 || treasure == 4)
@@ -172,7 +172,7 @@ void mining()
                                 Sleep (1000);
                                 cout << "You found a nugget of silver!" << endl;
                                 cout << endl;
-                                silverNugget++;
+                                get<2>(silverNugget)++;
 
                             }
                             else if (treasure == 2 || treasure == 5)
@@ -182,7 +182,7 @@ void mining()
                                 Sleep (2000);
                                 cout << "You found a pack of silver!" << endl;
                                 cout << endl;
-                                silver++;
+                                get<2>(silver)++;
                             }
                             else 
                             {
@@ -191,20 +191,20 @@ void mining()
                                 Sleep(2000);
                                 cout << "Its platinum!!" <<endl;
                                 cout << endl;
-                                platinum++;
+                                get<2>(Platinum)++;
                             }
                         } 
                         energy = (energy - (usePick*10));
                         cout << "You have : " << energy << " energy left" << endl;
                         cout << endl;
 
-                        cout << "You found : " << dirt << " chunks of dirt." << endl;
-                        cout << "You found : " << silverNugget << " pieces of silver nuggets." << endl;
-                        cout << "You found : " << silver << " chunks of silver." << endl;
+                        cout << "You found : " << get<2>(dirt) << " chunks of dirt." << endl;
+                        cout << "You found : " << get<2>(silverNugget) << " pieces of silver nuggets." << endl;
+                        cout << "You found : " << get<2>(silver) << " chunks of silver." << endl;
 
-                        if (platinum > 0)
+                        if (get<2>(Platinum) > 0)
                         {
-                            cout << "You found : " << platinum << " shiny diamonds" << endl;
+                            cout << "You found : " << get<2>(Platinum) << " shiny diamonds" << endl;
                         } 
                     }
                 }
@@ -250,21 +250,21 @@ void mining()
                                 Sleep(10000);
                                 cout << "You found an Aer Vis Crystal" << endl;
                                 cout << endl;
-                                AVCrystal++;
+                                get<2>(AVCrystal)++;
                             }
                             else if (treasure == 18 || treasure == 21)
                             {
                                 Sleep (5000);
                                 cout << "You found a diamond!" << endl;
                                 cout << endl;
-                                diamond++;
+                                get<2>(diamond)++;
 
                             }
                             else if (treasure == 17 || treasure == 22)
                             {
                                 Sleep (5000);
                                 cout << "You found Platinum" << endl;
-                                platinum++;
+                                get<2>(Platinum)++;
                             }
                             else if(treasure == 23)
                             {
@@ -272,27 +272,27 @@ void mining()
                                 cout << "Something red has shone out of the dirt" << endl;
                                 Sleep(10000);
                                 cout << "You found a ruby" << endl;
-                                ruby++;
+                                get<2>(ruby)++;
                             }
                             else 
                             {
                                 Sleep(2000);
                                 cout << "You found dirt" << endl;
-                                dirt++;
+                                get<2>(dirt)++;
                             }
                         } 
                         energy = (energy - (usePick*20));
                         cout << "You have : " << energy << " energy left" << endl;
                         cout << endl;
 
-                        cout << "You found : " << dirt << " chunks of dirt." << endl;
-                        cout << "You found : " << AVCrystal << " pieces of Aer Vis Crystals." << endl;
-                        cout << "You found : " << diamond << " shiny diamonds." << endl;
-                        cout << "You found : " << platinum << " shiny Platinums." << endl;      
+                        cout << "You found : " << get<2>(dirt) << " chunks of dirt." << endl;
+                        cout << "You found : " << get<2>(AVCrystal) << " pieces of Aer Vis Crystals." << endl;
+                        cout << "You found : " << get<2>(diamond) << " shiny diamonds." << endl;
+                        cout << "You found : " << get<2>(Platinum) << " shiny Platinums." << endl;      
 
-                        if (ruby > 0)
+                        if (get<2>(ruby) > 0)
                         {
-                            cout << "You found : " << ruby << " rubies" << endl;
+                            cout << "You found : " << get<2>(ruby) << " rubies" << endl;
                         } 
                     }
                 }
@@ -319,7 +319,7 @@ void mining()
     }while (tunnel != 10);
 }
 
-void checkBackpack()
+/*void checkBackpack()
 {
     do
     {
@@ -346,47 +346,64 @@ void checkBackpack()
         }
     } while(backpackMenu != 0);
     system("cls");
-}
+}*/
 
-void inventory()
+void inventory() //find bug
 {   
     do
     {
-        system("cls");
         cout << "Inventory" << endl;
         cout << endl;
         cout << "1. Gold Mine Treasure" << endl;
         cout << "2. Silver Mine Treausre" << endl;
         cout << "3. Crystal Mine Treasure" << endl;
+        cout << endl;
+        cout << "0. Exit" << endl;
 
         cin >> treasureCheck;
+        cout << treasureCheck;
         
         if (treasureCheck == 1)
         {
             system("cls");
-            cout << "Dirt : " << dirt << endl;
-            cout << "Gold Nuggets : " << goldNugget << endl;
-            cout << "Gold : " << gold << endl;
+            cout << "Dirt : " << get<2>(dirt) << endl;
+            cout << "Gold Nuggets : " << get<2>(goldNugget) << endl;
+            cout << "Gold : " << get<2>(gold) << endl;
         }
         else if (treasureCheck == 2)
         {
             system("cls");
-            cout << "Dirt : " << dirt << endl;
-            cout << "Silver Nuggets : " << silverNugget << endl;
-            cout << "Silver : " << silver << endl;
+            cout << "Dirt : " << get<2>(dirt) << endl;
+            cout << "Silver Nuggets : " << get<2>(silverNugget) << endl;
+            cout << "Silver : " << get<2>(silver) << endl;
         }
         else if (treasureCheck == 3)
         {
             system("cls");
-            cout << "Aer Vis Crystals : " << AVCrystal << endl;
-            cout << "Diamonds : " << diamond << endl;
-            cout << "Platinum : " << platinum << endl;
+            cout << "Aer Vis Crystals : " << get<2>(AVCrystal) << endl;
+            cout << "Diamonds : " << get<2>(diamond) << endl;
+            cout << "Platinum : " << get<2>(Platinum) << endl;
         }
+        else if (treasureCheck == 0)
+        {
+            break;
+        }
+    }while (treasureCheck != 0);
+}
 
-        cout << endl;
-        cout << "Click 0 to go back to Inventory Menu" << endl;
-        cin >> treasureCheckMenu;
-    }while (treasureCheckMenu == 0);
+void treasureMenu()
+{
+    cout << "Basic Minerals" << endl;
+    cout << "1. Silver Nuggets : $5" << endl;
+    cout << "2. Gold Nuggets : $10" << endl;
+    cout << "3. Silver : $15" << endl;
+    cout << "4. Gold : 20$" << endl; 
+    cout << endl;
+    cout << "Crystal Minerals" << endl;
+    cout << "5. Diamond : $50" << endl;
+    cout << "6. Platinum : $75" << endl;
+    cout << "7. Aer Vis Crystal : $100" << endl;
+    cout << "8. Ruby : $200" << endl;
 }
 
 int mainMenu()
@@ -420,5 +437,10 @@ void shop()
         system("cls");
 
         cout << "What would you like to sell today?" << endl;
+        cout << endl;
+        treasureMenu();
+
+        cin >> sell;
     }
 }
+
