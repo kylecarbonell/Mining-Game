@@ -18,7 +18,6 @@ void mining()
         cout << "1. Gold Tunnel" << endl;
         cout << "2. Silver Tunnel" << endl;
         cout << "3. Crystal Tunnel" << endl;
-        cout << "4. Backpack" << endl;
         cout << endl;
         cout << "0. Exit" <<endl;
         cin >> tunnel;
@@ -307,8 +306,8 @@ void mining()
             cout << "Please choose a proper tunnel" << endl;
         }
 
-        cout << "Click 0 to go back to the main menu" << endl;
-        cout << "Click any number to exit the mines" << endl;
+        cout << "Click 0 to go back to the mining menu" << endl;
+        cout << "Click 1 number to exit the mines" << endl;
 
         cin >>  tunnel;
         if (tunnel != 0)
@@ -316,42 +315,15 @@ void mining()
             system("cls");
             break;
         }
-    }while (tunnel != 10);
-}
-
-/*void checkBackpack()
-{
-    do
-    {
         system("cls");
-        cout << "-----------" << endl;
-        cout << " Backpack" << endl;
-        cout << "-----------" << endl;
-        cout << endl;
-
-        cout << "1. Inventory" << endl;
-        cout << "2. Minishop" << endl;
-        cout << endl;
-
-        cin >> backpackMenu;
-
-        if (backpackMenu == 1)
-        {
-            system("cls");
-            inventory();
-
-            cout << endl;
-            cout << "Click 0 to go back to menu?" << endl;
-            cin >> backpackMenu;
-        }
-    } while(backpackMenu != 0);
-    system("cls");
-}*/
+    }while (tunnel != 0);
+}
 
 void inventory() //find bug
 {   
     do
     {
+        system("cls");
         cout << "Inventory" << endl;
         cout << endl;
         cout << "1. Gold Mine Treasure" << endl;
@@ -388,12 +360,17 @@ void inventory() //find bug
         {
             break;
         }
+        cout << "Click 0 to go back to the start menu" << endl;
+        cout << "Click 1 to go back to the inventory menu" << endl;
+        cin >> treasureCheck;
+        system("cls");
     }while (treasureCheck != 0);
 }
 
 void treasureMenu()
 {
     cout << "Basic Minerals" << endl;
+    cout << "0. Dirt : $1" << endl;
     cout << "1. Silver Nuggets : $5" << endl;
     cout << "2. Gold Nuggets : $10" << endl;
     cout << "3. Silver : $15" << endl;
@@ -413,9 +390,11 @@ int mainMenu()
     cout << endl;
     cout << "1. Mine" << endl;
     cout << "2. Town" << endl;
+    cout << "3. Inventory" << endl;
     
     cin >> menu;
     cout << endl;
+    system("cls");
 
     return menu;
 }
@@ -435,12 +414,89 @@ void shop()
         inventory();
 
         system("cls");
+        do
+        {
+            cout << "What would you like to sell today?" << endl;
+            cout << endl;
+            treasureMenu();
 
-        cout << "What would you like to sell today?" << endl;
-        cout << endl;
-        treasureMenu();
+            cin >> sell;
+            setPrices(sell);
+            selling(sell, price);
 
-        cin >> sell;
+            cout << "Would you like to sell anything else?" << endl;
+            cin >> decision;
+            system("cls");
+        }while (decision == 0);
+
     }
 }
 
+void setPrices(int sell)
+{
+    if (sell == 0)
+    {
+        sellAmount = get<2>(dirt);
+        price = get<3>(dirt);
+    }
+    else if (sell == 1)
+    {
+        sellAmount = get<2>(silverNugget);
+        price = get<3>(silverNugget);
+    }
+    else if (sell == 2)
+    {
+        sellAmount = get<2>(goldNugget);
+        price = get<3>(goldNugget);
+    }
+    else if(sell == 3)
+    {
+        sellAmount = get<2>(silver);
+        price = get<3>(silver);
+    }
+    else if(sell == 4)
+    {
+        sellAmount = get<2>(gold);
+        price = get<3>(gold);
+    }
+    else if (sell == 7)
+    {
+        sellAmount = get<2>(AVCrystal);
+        price = get<3>(AVCrystal);
+    }
+    else if(sell == 5)
+    {
+        sellAmount = get<2>(diamond);
+        price = get<3>(diamond);
+    }
+    else if(sell == 6)
+    {
+        sellAmount = get<2>(Platinum);
+        price = get<3>(Platinum);
+    }
+    else if (sell == 8)
+    {
+        sellAmount = get<2>(ruby);
+        price = get<3>(ruby);
+    }
+}
+
+void selling(int sellAmount, int price)
+{
+    cout << "How much would you like to sell?" << endl;
+    cin >> sellNum;
+
+    product = (sellAmount - sellNum);
+    cout << product << endl;
+    if (product < 0)
+    {
+        cout << "You do not have enough of this item" << endl << "Get some more in the mines!" << endl;
+        cout << money;
+    }
+    else if (product >= 0)
+    {
+        moneyAdd = product*price;
+        money = money + moneyAdd;
+        cout << "You have $" << money << endl;
+    }
+}
