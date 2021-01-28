@@ -4,6 +4,14 @@
 #include <tuple>
 
 using namespace std;
+/*
+-Work on stuff
+-decision makings (0 and 1)
+-fix some dialogue inside mining and inventory
+-selling menu
+-organize menu
+-use real life examples
+*/
 
 //void menu;
 int mainMenu();
@@ -57,5 +65,74 @@ void inventory();
 int treasureCheck;
 int treasureCheckMenu;
 
-//minerals <id, name, amount, price>
+//Mining items
+class Items
+{
+    private:
+        string name;
+        string type;
+        int energyAdd;
+        int price;
+        int sleep;
+        int durability; // do later
 
+    public:
+        void setName(string name)
+        {
+            this->name = name;
+        }
+        void setType(string type)
+        {
+            this->type = type;
+        }
+        void setEnergy(int energyAdd)
+        {
+            this->energyAdd = energyAdd;
+        }
+        void setPrice(int price)
+        {
+            this->price = price;
+        }
+        void setSleep(int sleep)
+        {
+            this->sleep = sleep;
+        }
+
+        string getName()
+        {
+            return name;
+        }
+        string getType()
+        {
+            return type;
+        }
+        int getEnergyAdd()
+        {
+            return energyAdd;
+        }
+        int getPrice()
+        {
+            return price;
+        }
+        int getSleep()
+        {
+            return sleep;
+        }
+
+};
+
+void itemMaker()
+{
+    // Energy Restoration
+    Items ChocolateBar;
+    ChocolateBar.setName("Chocolate Bar");
+    ChocolateBar.setType("Food");
+    ChocolateBar.setEnergy(5);
+    ChocolateBar.setPrice(5);
+
+    Items BentoBox;
+    BentoBox.setName("Bento Box");
+    BentoBox.setType("Food");
+    BentoBox.setEnergy(20);
+    BentoBox.setPrice(30);
+}

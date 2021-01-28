@@ -2,6 +2,22 @@
 
 using namespace std;
 
+void itemMaker()
+{
+    // Energy Restoration
+    Items ChocolateBar;
+    ChocolateBar.setName("Chocolate Bar");
+    ChocolateBar.setType("Food");
+    ChocolateBar.setEnergy(5);
+    ChocolateBar.setPrice(5);
+
+    Items BentoBox;
+    BentoBox.setName("Bento Box");
+    BentoBox.setType("Food");
+    BentoBox.setEnergy(20);
+    BentoBox.setPrice(30);
+}
+
 void mining()
 {
     int i;
@@ -122,6 +138,10 @@ void mining()
                     cout << "You have : " << energy << " or about " << (energy / 10) << " strikes" << endl;
                 }
             }
+            else if (decision == 0)
+            {
+                break;
+            }
         }
         else if (tunnel == 2 && energy > 0)
         {
@@ -208,6 +228,10 @@ void mining()
                     }
                 }
             }
+            else if (decision == 0)
+            {
+                break;
+            }
         }
         else if (tunnel == 3 && energy > 0)
         {
@@ -242,7 +266,7 @@ void mining()
                         srand(time(0));
                         for (i = 0; i <usePick; i++)
                         {
-                            treasure = rand() % 20;
+                            treasure = rand() % 100;
 
                             if (treasure == 19 || treasure == 20)
                             {
@@ -296,6 +320,10 @@ void mining()
                     }
                 }
             }
+            else if (decision == 0)
+            {
+                break;
+            }
         }
         else if (tunnel == 0)
         {
@@ -319,16 +347,15 @@ void mining()
     }while (tunnel != 0);
 }
 
-void inventory() //find bug
+void inventory() 
 {   
     do
     {
         system("cls");
         cout << "Inventory" << endl;
         cout << endl;
-        cout << "1. Gold Mine Treasure" << endl;
-        cout << "2. Silver Mine Treausre" << endl;
-        cout << "3. Crystal Mine Treasure" << endl;
+        cout << "1. Mines" << endl;
+        cout << "2. Items" << endl;
         cout << endl;
         cout << "0. Exit" << endl;
 
@@ -341,17 +368,8 @@ void inventory() //find bug
             cout << "Dirt : " << get<2>(dirt) << endl;
             cout << "Gold Nuggets : " << get<2>(goldNugget) << endl;
             cout << "Gold : " << get<2>(gold) << endl;
-        }
-        else if (treasureCheck == 2)
-        {
-            system("cls");
-            cout << "Dirt : " << get<2>(dirt) << endl;
             cout << "Silver Nuggets : " << get<2>(silverNugget) << endl;
             cout << "Silver : " << get<2>(silver) << endl;
-        }
-        else if (treasureCheck == 3)
-        {
-            system("cls");
             cout << "Aer Vis Crystals : " << get<2>(AVCrystal) << endl;
             cout << "Diamonds : " << get<2>(diamond) << endl;
             cout << "Platinum : " << get<2>(Platinum) << endl;
@@ -370,17 +388,15 @@ void inventory() //find bug
 void treasureMenu()
 {
     cout << "Basic Minerals" << endl;
-    cout << "0. Dirt : $1" << endl;
-    cout << "1. Silver Nuggets : $5" << endl;
-    cout << "2. Gold Nuggets : $10" << endl;
-    cout << "3. Silver : $15" << endl;
-    cout << "4. Gold : 20$" << endl; 
-    cout << endl;
-    cout << "Crystal Minerals" << endl;
-    cout << "5. Diamond : $50" << endl;
-    cout << "6. Platinum : $75" << endl;
-    cout << "7. Aer Vis Crystal : $100" << endl;
-    cout << "8. Ruby : $200" << endl;
+    cout << "0. Dirt : $1" <<"              || " << get<2>(dirt) << endl;
+    cout << "1. Silver Nuggets : $5" <<"    || " << get <2>(silverNugget) << endl;
+    cout << "2. Gold Nuggets : $10" <<"     || " << get<2>(goldNugget) << endl;
+    cout << "3. Silver : $15" <<"           || " << get<2>(silver)<< endl;
+    cout << "4. Gold : 20$" <<"             || " << get<2>(gold)<< endl; 
+    cout << "5. Diamond : $50" <<"          || " << get<2>(diamond)<< endl;
+    cout << "6. Platinum : $75" <<"         || " << get<2>(Platinum) << endl;
+    cout << "7. Aer Vis Crystal : $100" <<" || " << get<2>(AVCrystal) << endl;
+    cout << "8. Ruby : $200" <<"            || " << get<2>(ruby) << endl;
 }
 
 int mainMenu()
@@ -410,9 +426,6 @@ void shop()
 
     if (shopMenu == 1)
     {
-        cout << "This is your inventory" << endl;
-        inventory();
-
         system("cls");
         do
         {
@@ -422,12 +435,18 @@ void shop()
 
             cin >> sell;
             setPrices(sell);
-            selling(sell, price);
+            selling(sellAmount, price);
 
             cout << "Would you like to sell anything else?" << endl;
             cin >> decision;
             system("cls");
-        }while (decision == 0);
+        }while (decision != 0);
+    }
+    else if (shopMenu == 2)
+    {
+        cout << "What would you like buy today?" << endl;
+        cout << endl;
+        buy();
 
     }
 }
@@ -487,7 +506,6 @@ void selling(int sellAmount, int price)
     cin >> sellNum;
 
     product = (sellAmount - sellNum);
-    cout << product << endl;
     if (product < 0)
     {
         cout << "You do not have enough of this item" << endl << "Get some more in the mines!" << endl;
@@ -495,8 +513,16 @@ void selling(int sellAmount, int price)
     }
     else if (product >= 0)
     {
-        moneyAdd = product*price;
-        money = money + moneyAdd;
+        moneyAdd = sellNum*price;
+        money += moneyAdd;
         cout << "You have $" << money << endl;
     }
 }
+
+void buy(Items ChocolateBar)
+{
+   cout << ChocolateBar.getPrice();
+}
+
+
+

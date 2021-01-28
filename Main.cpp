@@ -4,18 +4,22 @@ using namespace std;
 
 int main()
 {
+    itemMaker();
     int play;
     do
     {
         int play = mainMenu();
-        system("cls");
             if (play == 1)
             {
                 mining();
             }
+            else if (play == 2)
+            {
+                shop();
+            }
             else if (play == 3)
             {
-                checkBackpack();
+                inventory();
             }
     }while (play != 0);
     cout << "Thanks for playing!" << endl;
