@@ -25,16 +25,25 @@ void shop();
 
 //shop
 int shopMenu;
-int sell;
+int choice;
 int money;
 int moneyAdd;
-void setPrices(int sell);
-void selling(int sellAmount, int price);
-int sellNum;
-int sellAmount;
+
+void setPrices(int choice);
+void selling(int product, int price, int choice);
+void subtractItemCount(int choice, int sellQuantity);
+void buy(int getBuy, int price, int itemAdd, string itemName);
+void buyPrices(int choice);
+
+int sellQuantity;
 int product;
+int checkSell;
 int price;
 int decision;
+int getBuy;
+int itemAdd;
+int buying;
+string itemName;
 
 //all mining
 int treasure;
@@ -62,77 +71,13 @@ tuple<int, string, int, int> ruby(8, "Ruby", 0, 200);
 int backToMenu;
 int backpackMenu;
 void inventory();
-int treasureCheck;
+int inventoryDecision;
 int treasureCheckMenu;
 
-//Mining items
-class Items
-{
-    private:
-        string name;
-        string type;
-        int energyAdd;
-        int price;
-        int sleep;
-        int durability; // do later
+//Mining items <energyadd, name, amount, price>
+tuple<int, string, int, int> CBar(5, "Chocolate Bar", 0, 5);
+tuple<int, string, int, int> BBox(50, "Bento Box", 0, 50);
+tuple<int, string, int, int> Sandwhich(20, "Ham Sandwhich", 0, 30);
+tuple<int, string, int, int> Salad(10, "Salad", 0, 10);
+tuple<int, string, int, int> CNuggies(15, "Chicken Nuggets", 0, 20);
 
-    public:
-        void setName(string name)
-        {
-            this->name = name;
-        }
-        void setType(string type)
-        {
-            this->type = type;
-        }
-        void setEnergy(int energyAdd)
-        {
-            this->energyAdd = energyAdd;
-        }
-        void setPrice(int price)
-        {
-            this->price = price;
-        }
-        void setSleep(int sleep)
-        {
-            this->sleep = sleep;
-        }
-
-        string getName()
-        {
-            return name;
-        }
-        string getType()
-        {
-            return type;
-        }
-        int getEnergyAdd()
-        {
-            return energyAdd;
-        }
-        int getPrice()
-        {
-            return price;
-        }
-        int getSleep()
-        {
-            return sleep;
-        }
-
-};
-
-void itemMaker()
-{
-    // Energy Restoration
-    Items ChocolateBar;
-    ChocolateBar.setName("Chocolate Bar");
-    ChocolateBar.setType("Food");
-    ChocolateBar.setEnergy(5);
-    ChocolateBar.setPrice(5);
-
-    Items BentoBox;
-    BentoBox.setName("Bento Box");
-    BentoBox.setType("Food");
-    BentoBox.setEnergy(20);
-    BentoBox.setPrice(30);
-}

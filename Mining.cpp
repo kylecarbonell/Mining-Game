@@ -2,20 +2,20 @@
 
 using namespace std;
 
-void itemMaker()
+int mainMenu()
 {
-    // Energy Restoration
-    Items ChocolateBar;
-    ChocolateBar.setName("Chocolate Bar");
-    ChocolateBar.setType("Food");
-    ChocolateBar.setEnergy(5);
-    ChocolateBar.setPrice(5);
+    int menu;
+    cout << "Welcome to the old west" << endl;
+    cout << endl;
+    cout << "1. Mine" << endl;
+    cout << "2. Town" << endl;
+    cout << "3. Inventory" << endl;
+    
+    cin >> menu;
+    cout << endl;
+    system("cls");
 
-    Items BentoBox;
-    BentoBox.setName("Bento Box");
-    BentoBox.setType("Food");
-    BentoBox.setEnergy(20);
-    BentoBox.setPrice(30);
+    return menu;
 }
 
 void mining()
@@ -359,10 +359,10 @@ void inventory()
         cout << endl;
         cout << "0. Exit" << endl;
 
-        cin >> treasureCheck;
-        cout << treasureCheck;
+        cin >> inventoryDecision;
+ 
         
-        if (treasureCheck == 1)
+        if (inventoryDecision == 1)
         {
             system("cls");
             cout << "Dirt : " << get<2>(dirt) << endl;
@@ -374,15 +374,19 @@ void inventory()
             cout << "Diamonds : " << get<2>(diamond) << endl;
             cout << "Platinum : " << get<2>(Platinum) << endl;
         }
-        else if (treasureCheck == 0)
+        else if (inventoryDecision == 2)
+        {
+
+        }
+        else if (inventoryDecision == 0)
         {
             break;
         }
         cout << "Click 0 to go back to the start menu" << endl;
         cout << "Click 1 to go back to the inventory menu" << endl;
-        cin >> treasureCheck;
+        cin >> inventoryDecision;
         system("cls");
-    }while (treasureCheck != 0);
+    }while (inventoryDecision != 0);
 }
 
 void treasureMenu()
@@ -398,21 +402,13 @@ void treasureMenu()
     cout << "7. Aer Vis Crystal : $100" <<" || " << get<2>(AVCrystal) << endl;
     cout << "8. Ruby : $200" <<"            || " << get<2>(ruby) << endl;
 }
-
-int mainMenu()
+void buyMenu()
 {
-    int menu;
-    cout << "Welcome to the old west" << endl;
-    cout << endl;
-    cout << "1. Mine" << endl;
-    cout << "2. Town" << endl;
-    cout << "3. Inventory" << endl;
-    
-    cin >> menu;
-    cout << endl;
-    system("cls");
-
-    return menu;
+    cout << "1. Chocolate Bar : $5" <<"              || " << get<2>(CBar) << " || Restores 5 energy" << endl;
+    cout << "2. Salad : $10" <<"                     || " << get<2>(Salad) << " || Restores 10 energy" << endl;
+    cout << "3. Chicken Nuggets : $20" <<"           || " << get<2>(CNuggies) << " || Restores 15 energy" << endl;
+    cout << "4. Sandwhich : $30" <<"                 || " << get<2>(Sandwhich) << " || Restores 20 energy" << endl;
+    cout << "5. Bento Box : $50" <<"                 || " << get<2>(BBox) << " || Restores 50 energy" << endl;
 }
 
 void shop()
@@ -433,9 +429,9 @@ void shop()
             cout << endl;
             treasureMenu();
 
-            cin >> sell;
-            setPrices(sell);
-            selling(sellAmount, price);
+            cin >> choice;
+            setPrices(choice);
+            selling(product, price, choice);
 
             cout << "Would you like to sell anything else?" << endl;
             cin >> decision;
@@ -444,68 +440,78 @@ void shop()
     }
     else if (shopMenu == 2)
     {
-        cout << "What would you like buy today?" << endl;
-        cout << endl;
-        buy();
+        system("cls");
+        do
+        {
+            cout << "What would you like buy today?" << endl;
+            cout << endl;
+            buyMenu();
 
+            cin >> choice;
+            buyPrices(choice);
+            buy(getBuy, price, itemAdd, itemName);
+
+            cout << "Would you like to buy anything else?" << endl;
+            cin >> decision;
+            system("cls");
+        }while (decision != 0);
     }
 }
 
-void setPrices(int sell)
+void setPrices(int choice)
 {
-    if (sell == 0)
+    if (choice == 0)
     {
-        sellAmount = get<2>(dirt);
+        product = get<2>(dirt);
         price = get<3>(dirt);
     }
-    else if (sell == 1)
+    else if (choice == 1)
     {
-        sellAmount = get<2>(silverNugget);
+        product = get<2>(silverNugget);
         price = get<3>(silverNugget);
     }
-    else if (sell == 2)
+    else if (choice == 2)
     {
-        sellAmount = get<2>(goldNugget);
+        product = get<2>(goldNugget);
         price = get<3>(goldNugget);
     }
-    else if(sell == 3)
+    else if(choice == 3)
     {
-        sellAmount = get<2>(silver);
+        product = get<2>(silver);
         price = get<3>(silver);
     }
-    else if(sell == 4)
+    else if(choice == 4)
     {
-        sellAmount = get<2>(gold);
+        product = get<2>(gold);
         price = get<3>(gold);
     }
-    else if (sell == 7)
+    else if (choice == 7)
     {
-        sellAmount = get<2>(AVCrystal);
+        product = get<2>(AVCrystal);
         price = get<3>(AVCrystal);
     }
-    else if(sell == 5)
+    else if(choice == 5)
     {
-        sellAmount = get<2>(diamond);
+        product = get<2>(diamond);
         price = get<3>(diamond);
     }
-    else if(sell == 6)
+    else if(choice == 6)
     {
-        sellAmount = get<2>(Platinum);
+        product = get<2>(Platinum);
         price = get<3>(Platinum);
     }
-    else if (sell == 8)
+    else if (choice == 8)
     {
-        sellAmount = get<2>(ruby);
+        product = get<2>(ruby);
         price = get<3>(ruby);
     }
 }
-
-void selling(int sellAmount, int price)
+void selling(int sellAmount, int price, int choice)
 {
     cout << "How much would you like to sell?" << endl;
-    cin >> sellNum;
+    cin >> sellQuantity;
 
-    product = (sellAmount - sellNum);
+    checkSell = (sellAmount - sellQuantity);
     if (product < 0)
     {
         cout << "You do not have enough of this item" << endl << "Get some more in the mines!" << endl;
@@ -513,16 +519,110 @@ void selling(int sellAmount, int price)
     }
     else if (product >= 0)
     {
-        moneyAdd = sellNum*price;
+        subtractItemCount(choice, sellQuantity);
+        moneyAdd = sellQuantity*price;
         money += moneyAdd;
         cout << "You have $" << money << endl;
     }
 }
-
-void buy(Items ChocolateBar)
+void subtractItemCount(int choice, int sellQuantity)
 {
-   cout << ChocolateBar.getPrice();
+    if (choice == 0)
+    {
+       get<2>(dirt) = get<2>(dirt) - sellQuantity;
+    }
+    else if (choice == 1)
+    {
+        get<2>(silverNugget) = get<2>(silverNugget) - sellQuantity;
+    }
+    else if (choice == 2)
+    {
+        get<2>(goldNugget) = get<2>(goldNugget) - sellQuantity;
+    }
+    else if(choice == 3)
+    {
+        get<2>(silver) = get<2>(silver) - sellQuantity;
+    }
+    else if(choice == 4)
+    {
+        get<2>(gold) = get<2>(gold) - sellQuantity;
+    }
+    else if (choice == 7)
+    {
+        get<2>(AVCrystal) = get<2>(AVCrystal) - sellQuantity;
+    }
+    else if(choice == 5)
+    {
+        get<2>(diamond) = get<2>(diamond) - sellQuantity;
+    }
+    else if(choice == 6)
+    {
+        get<2>(Platinum) = get<2>(Platinum) - sellQuantity;
+    }
+    else if (choice == 8)
+    {
+        get<2>(ruby) = get<2>(ruby) - sellQuantity;
+    }
 }
 
+void buyPrices(int choice)
+{
+    if (choice == 1)
+    {
+        getBuy = get<3>(CBar);
+        price = get<0>(CBar);
+        itemAdd = get<2>(CBar);
+        itemName = get<2>(CBar);
+    }
+    else if (choice == 5)
+    {
+        getBuy = get<3>(BBox);
+        price = get<0>(BBox);
+        itemAdd = get<2>(BBox);
+        itemName = get<2>(BBox);
+    }
+    else if (choice == 4)
+    {
+        getBuy = get<3>(Sandwhich);
+        price = get<0>(Sandwhich);
+        itemAdd = get<2>(Sandwhich);
+        itemName = get<2>(Sandwhich);
+    }
+    else if (choice == 2)
+    {
+        getBuy = get<3>(Salad);
+        price = get<0>(Salad);
+        itemAdd = get<2>(Salad);
+        itemName = get<2>(Salad);
+    }
+    else if (choice == 3)
+    {
+        getBuy = get<3>(CNuggies);
+        price = get<0>(CNuggies);
+        itemAdd = get<2>(CNuggies);
+        itemName = get<2>(CNuggies);
+    }
+}
+void buy(int getBuy, int price, int itemAdd, string itemName)
+{
+    cout << "How much would you like to buy?" << endl;
+    cin >> buying;
 
+    product = buying*price;
+    if (product > money)
+    {
+        cout << "You do not have enough money to buy these items" << endl;
+    }
+    else if (product >= money)
+    {
+        money = money - product;
+        cout << "Thank you for shopping!" << endl;
 
+        itemAdd += buying;
+        cout << "You now have " << buying <<  " " << itemName << endl;
+        cout << get<2>(CBar);
+        cout << get<2>(BBox);
+    }
+}
+
+void useItem
