@@ -18,6 +18,20 @@ int mainMenu()
     return menu;
 }
 
+void checkPickaxe()
+{
+    if (get<2>(stonePick) == true)
+    {
+        if (get<2>(ironPick) == true)
+        {
+            sleepCount = get<0>(ironPick);
+        }
+        else 
+        {
+            sleepCount == get<0>(stonePick);
+        }
+    }
+}
 void mining()
 {
     int i;
@@ -172,7 +186,7 @@ void mining()
                     {
                         system("cls");
                         cout << "Mining..." << endl;
-                        Sleep(1000);
+                        Sleep(sleepCount);
                         srand(time(0));
                         for (i = 0; i <usePick; i++)
                         {
@@ -180,7 +194,7 @@ void mining()
 
                             if (treasure == 0 || treasure == 3)
                             {
-                                Sleep(500);
+                                Sleep(sleepCount + 500);
                                 cout << "You found dirt" << endl;
                                 cout << endl;
                                 get<2>(dirt)++;
@@ -376,7 +390,27 @@ void inventory()
         }
         else if (inventoryDecision == 2)
         {
+            do
+            {
+            system("cls");
+            cout << "1. Chocolate Bar : " << get<2>(CBar) << endl;
+            cout << "2. Salad : " << get<2>(Salad) << endl;
+            cout << "3. Chicken Nuggets : " << get<2>(CNuggies) << endl;
+            cout << "4. Ham Sandwhich : " << get<2>(Sandwhich) << endl;
+            cout << "5. Bento Box : " << get<2>(BBox) << endl;
+            cout << endl;
+            cout << "0. Exit" << endl;
 
+            cout << endl;
+            cout << "What item would you like to use?" << endl;
+            cin >> useItemChange;
+            if (useItemChange == 0)
+            {
+                break;
+            }
+            itemVariables(useItemChange);
+            usingItems(item, usingItem);
+            }while(useItemChange != 0);
         }
         else if (inventoryDecision == 0)
         {
@@ -443,6 +477,7 @@ void shop()
         system("cls");
         do
         {
+            cout << "You have $" <<  money << endl;
             cout << "What would you like buy today?" << endl;
             cout << endl;
             buyMenu();
@@ -570,37 +605,37 @@ void buyPrices(int choice)
     if (choice == 1)
     {
         getBuy = get<3>(CBar);
-        price = get<0>(CBar);
+        price = get<3>(CBar);
         itemAdd = get<2>(CBar);
-        itemName = get<2>(CBar);
+        itemName = get<1>(CBar);
     }
     else if (choice == 5)
     {
         getBuy = get<3>(BBox);
-        price = get<0>(BBox);
+        price = get<3>(BBox);
         itemAdd = get<2>(BBox);
-        itemName = get<2>(BBox);
+        itemName = get<1>(BBox);
     }
     else if (choice == 4)
     {
         getBuy = get<3>(Sandwhich);
         price = get<0>(Sandwhich);
         itemAdd = get<2>(Sandwhich);
-        itemName = get<2>(Sandwhich);
+        itemName = get<1>(Sandwhich);
     }
     else if (choice == 2)
     {
         getBuy = get<3>(Salad);
-        price = get<0>(Salad);
+        price = get<3>(Salad);
         itemAdd = get<2>(Salad);
-        itemName = get<2>(Salad);
+        itemName = get<1>(Salad);
     }
     else if (choice == 3)
     {
         getBuy = get<3>(CNuggies);
-        price = get<0>(CNuggies);
+        price = get<3>(CNuggies);
         itemAdd = get<2>(CNuggies);
-        itemName = get<2>(CNuggies);
+        itemName = get<1>(CNuggies);
     }
 }
 void buy(int getBuy, int price, int itemAdd, string itemName)
@@ -613,16 +648,114 @@ void buy(int getBuy, int price, int itemAdd, string itemName)
     {
         cout << "You do not have enough money to buy these items" << endl;
     }
-    else if (product >= money)
+    else if (product <= money)
     {
-        money = money - product;
         cout << "Thank you for shopping!" << endl;
-
-        itemAdd += buying;
-        cout << "You now have " << buying <<  " " << itemName << endl;
-        cout << get<2>(CBar);
-        cout << get<2>(BBox);
+        
+        addItems(buying, choice, product);
+    }
+}
+void addItems(int buying, int choice, int product)
+{
+    if (choice == 1)
+    {
+        get<2>(CBar) = get<2>(CBar) + buying;
+        money = money - product;
+        cout << "hehe";
+    }
+    else if (choice == 5)
+    {
+        get<2>(BBox) = get<2>(BBox) + buying;
+        money = money - product;
+    }
+    else if (choice == 4)
+    {
+        get<2>(Sandwhich) = get<2>(Sandwhich) + buying;
+        money = money - product;
+    }
+    else if (choice == 2)
+    {
+        get<2>(Salad) =  get<2>(Salad) + buying;
+        money = money - product;
+    }
+    else if (choice == 3)
+    {
+        get<2>(CNuggies) = get<2>(CNuggies) + buying;
+        money = money - product;
+    }
+    else if (choice == 6)
+    {
+        get<2> (stonePick) = true;
+        money = money - product;
     }
 }
 
-void useItem
+void subtractItem(int useItemChange, int itemCount)
+{
+    if (useItemChange == 1)
+    {
+       get<2>(CBar) = get<2>(CBar) - itemCount;
+    }
+    else if (useItemChange == 2)
+    {
+        get<2>(Salad) = get<2>(Salad) - itemCount;
+    }
+    else if (useItemChange == 3)
+    {
+        get<2>(CNuggies) = get<2>(CNuggies) - itemCount;
+    }
+    else if(useItemChange == 4)
+    {
+        get<2>(Salad) = get<2>(Sandwhich) - itemCount;
+    }
+    else if(useItemChange == 5)
+    {
+        get<2>(BBox) = get<2>(BBox) - itemCount;
+    }
+}
+void itemVariables(int useItemChange)
+{
+    if (useItemChange == 1)
+    {
+       item = get<2>(CBar);
+       usingItem = get<3>(CBar);
+    }
+    else if (useItemChange == 2)
+    {
+        item = get<2>(Salad);
+        usingItem = get<3>(Salad);
+    }
+    else if (useItemChange == 3)
+    {
+        item = get<2>(CNuggies);
+        usingItem = get<3>(CNuggies);
+    }
+    else if(useItemChange == 4)
+    {
+        item = get<2>(Sandwhich);
+        usingItem = get<3>(Sandwhich);
+    }
+    else if(useItemChange == 5)
+    {
+        item = get<2>(BBox);
+        usingItem = get<3>(BBox);
+    }  
+}
+void usingItems(int item, int usingItem)
+{
+    cout << "How much would you like to use?" << endl;
+    cin >> itemCount;
+
+    if (itemCount > item)
+    {
+        cout << "You do not have enough of this item" << endl;
+        cout << "Please get more!" << endl;
+    }
+    else if (itemCount <= item)
+    {
+        subtractItem(useItemChange, itemCount);
+        energy += usingItem;
+        cout << "You restored " << usingItem << " energy." << endl;
+        cout << "You now have " << energy << " energy" << endl;
+    }   
+}
