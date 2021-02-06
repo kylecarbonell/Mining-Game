@@ -1,6 +1,112 @@
-#include "Mining.hpp"
+#include "huntingGames.cpp"
 
 using namespace std;
+
+void outputFile(string fileName) // saves data
+{
+    ofstream player;
+    player.open ("save1.txt");
+
+    if (player.fail())
+    {
+        cerr << "ERROR!" << endl;
+        exit(1);
+    }
+
+    player << money << endl;
+    player << energy << endl;
+    
+    player << get<2>(dirt) << endl;
+    player << get<2>(gold) << endl;
+    player << get<2>(goldNugget) << endl;
+    player << get<2>(silver) << endl;
+    player << get<2>(silverNugget) << endl;
+    player << get<2>(AVCrystal) << endl;
+    player << get<2>(Platinum) << endl;
+    player << get<2>(diamond) << endl;
+    player << get<2>(ruby) << endl;
+    player << get<2>(CBar) << endl;
+    player << get<2>(Salad) << endl;
+    player << get<2>(CNuggies) << endl;
+    player << get<2>(Sandwhich) << endl;
+    player << get<2>(BBox) << endl;
+    player << get<2>(woodenPick) << endl;
+    player << get<2>(rabbitMeat) << endl;
+
+    player.close();
+}
+void inputFile(string fileName) // loads data
+{
+    ifstream player;
+    player.open (fileName);
+
+    if (player.fail())
+    {
+        cerr << "ERROR!" << endl;
+        exit(1);
+    }
+
+    player >> money;
+    player >> energy;
+    player >> get<2>(dirt);
+    player >> get<2>(gold);
+    player >> get<2>(goldNugget);
+    player >> get<2>(silver);
+    player >> get<2>(silverNugget);
+    player >> get<2>(AVCrystal);
+    player >> get<2>(Platinum);
+    player >> get<2>(diamond);
+    player >> get<2>(ruby);
+    player >> get<2>(goldNugget);
+    player >> get<2>(CBar);
+    player >> get<2>(Salad);
+    player >> get<2>(CNuggies);
+    player >> get<2>(Sandwhich);
+    player >> get<2>(BBox);
+    player >> get<2>(woodenPick);
+    player >> get<2>(rabbitMeat);
+
+    player.close();
+}
+void loadFile()
+{
+    cout << "Welcome to the the Mining Game!" << endl;
+    cout << "Which file would you like to use today?" << endl;  
+    cin >> chooseFile;
+    if (chooseFile == 1)
+    {
+        fileName = "save1.txt";
+    }
+    else if (chooseFile == 2)
+    {
+        fileName = "save2.txt";
+    }
+    else if (chooseFile == 3)
+    {
+        fileName = "save3.txt";
+    }
+    else if (chooseFile == 99)
+    {
+        fileName = "mod.txt";
+    }
+
+    cout << "Loading save file..." << endl;
+    Sleep(1000);
+    inputFile(fileName);
+    cout << "Welcome to the mining world!" << endl;
+    
+}
+void saveFile()
+{
+    cout << "Thank you for playing!!" << endl;
+    cout << "Please wait as your game saves..." << endl;
+    Sleep(1000);
+    cout << endl;
+    outputFile(fileName);
+    system("cls");
+    cout << "Thank you for waiting" << endl;
+    cout << "Your game has fully saved!" << endl;
+}
 
 int mainMenu()
 {
@@ -9,7 +115,8 @@ int mainMenu()
     cout << endl;
     cout << "1. Mine" << endl;
     cout << "2. Town" << endl;
-    cout << "3. Inventory" << endl;
+    cout << "3. Forest" << endl;
+    cout << "4. Inventory" << endl;
     
     cin >> menu;
     cout << endl;
@@ -20,15 +127,28 @@ int mainMenu()
 
 void checkPickaxe()
 {
-    if (get<2>(stonePick) == true)
+    if(get<2>(woodenPick) == 1)
     {
-        if (get<2>(ironPick) == true)
+        if (get<2>(stonePick) == 1)
         {
-            sleepCount = get<0>(ironPick);
+            if (get<2>(ironPick) == 1)
+            {
+                sleepCount = get<0>(ironPick);
+            }
+            else 
+            {
+                sleepCount = get<0>(stonePick);
+                pickaxeType = get<1>(stonePick);
+                enterGold = true;
+                enterCrystal = false;
+            }
         }
-        else 
+        else
         {
-            sleepCount == get<0>(stonePick);
+            sleepCount = get<0>(woodenPick);
+            pickaxeType = get<1>(woodenPick);
+            enterGold = false;
+            enterCrystal = false;
         }
     }
 }
@@ -37,7 +157,7 @@ void mining()
     int i;
     int tunnel;
     int usePick = 5;
-    
+    checkPickaxe();
     
     int decision;
     do
@@ -45,8 +165,8 @@ void mining()
         int tunnel;
         int i;
         cout << "Choose your tunnel" << endl;
-        cout << "1. Gold Tunnel" << endl;
-        cout << "2. Silver Tunnel" << endl;
+        cout << "1. Silver Tunnel" << endl;
+        cout << "2. Gold Tunnel" << endl;
         cout << "3. Crystal Tunnel" << endl;
         cout << endl;
         cout << "0. Exit" <<endl;
@@ -54,110 +174,14 @@ void mining()
         cout << endl;
         system("cls");
 
-        if (tunnel != 0 && energy <= 0)
+        if (tunnel != 0 && energy <= 0) // no energy
         {
             system("cls");
             cout << "You do not have enough energy to mine!!" << endl;
             cout << "Take a break or eat some food" << endl;
             break;
         }
-        else if (tunnel == 1 && energy > 0)
-        {
-            int decision;
-            cout << "Would you like to enter tunnel 1?" << endl;
-            cout << "(Please answer yes (1) or no (0)" << endl;
-            cin >> decision;
-            system("cls");
-
-            if (decision == 1)
-            {
-                int mine;
-                cout << "You see a shining piece on the rock walls" << endl;
-                cout << "How many times would you like to strike it?" << endl;
-                cout << "You have : " << energy << " left" << endl;
-                cout << endl;
-
-                cin >> usePick;
-
-                if(usePick <= (energy / 10))
-                {
-                    cout << "You will strike " << usePick << " times." << endl;
-                    cout << "This costs " << (usePick*10) << " energy" << endl;
-                    cout << "Would you like to continue?" << endl;
-                    cin >> mine;
-
-                    if (mine == 1)
-                    {
-                        system("cls");
-                        cout << "Mining..." << endl;
-                        Sleep(1000);
-                        srand(time(0));
-                        for (i = 0; i <usePick; i++)
-                        {
-                            treasure = rand() % 9;
-
-                            if (treasure == 0 || treasure == 3 || treasure == 6)
-                            {
-                                Sleep(500);
-                                cout << "You found dirt" << endl;
-                                cout << endl;
-                                get<2> (dirt)++;
-
-                            }
-                            else if (treasure == 1 || treasure == 4 || treasure == 7)
-                            {
-                                Sleep (1000);
-                                cout << "You found a nugget of gold!" << endl;
-                                cout << endl;
-                                get<2>(goldNugget)++;
-
-                            }
-                            else if (treasure == 2 || treasure == 5 || treasure == 9)
-                            {
-                                Sleep (1000);
-                                cout << "It appears there is something hard inside this rock..." << endl;
-                                Sleep (2000);
-                                cout << "You found a pack of gold!" << endl;
-                                cout << endl;
-                                get<2>(gold)++;
-                            }
-                            else 
-                            {
-                                Sleep(2000);
-                                cout << "What is this??" << endl;
-                                Sleep(2000);
-                                cout << "Its a diamond!!" <<endl;
-                                cout << endl;
-                                get<2>(diamond)++;
-                            }
-                        } 
-                        energy = (energy - (usePick*10));
-                        cout << "You have : " << energy << " energy left" << endl;
-                        cout << endl;
-
-                        cout << "You found : " << get<2>(dirt) << " chunks of dirt." << endl;
-                        cout << "You found : " << get<2>(goldNugget) << " pieces of gold nuggets." << endl;
-                        cout << "You found : " << get<2>(gold) << " chunks of gold." << endl;
-
-                        if (get<2>(diamond) > 0)
-                        {
-                            cout << "You found : " << get<2>(diamond) << " shiny diamonds" << endl;
-                        } 
-                    }
-                } 
-                else if (usePick > (energy / 10))
-                {
-                    system ("cls");
-                    cout << "You do not have enough energy to strike this many times" << endl;
-                    cout << "You have : " << energy << " or about " << (energy / 10) << " strikes" << endl;
-                }
-            }
-            else if (decision == 0)
-            {
-                break;
-            }
-        }
-        else if (tunnel == 2 && energy > 0)
+        else if (tunnel == 1 && energy > 0) // silver mines
         {
             int decision;
             cout << "Would you like to enter tunnel 2?" << endl;
@@ -202,7 +226,7 @@ void mining()
                             }
                             else if (treasure == 1 || treasure == 4)
                             {
-                                Sleep (1000);
+                                Sleep (sleepCount+1000);
                                 cout << "You found a nugget of silver!" << endl;
                                 cout << endl;
                                 get<2>(silverNugget)++;
@@ -210,18 +234,18 @@ void mining()
                             }
                             else if (treasure == 2 || treasure == 5)
                             {
-                                Sleep (1000);
+                                Sleep (sleepCount+1000);
                                 cout << "It appears there is something hard inside this rock..." << endl;
-                                Sleep (2000);
+                                Sleep (sleepCount+2000);
                                 cout << "You found a pack of silver!" << endl;
                                 cout << endl;
                                 get<2>(silver)++;
                             }
                             else 
                             {
-                                Sleep(2000);
+                                Sleep(sleepCount+2000);
                                 cout << "What is this??" << endl;
-                                Sleep(2000);
+                                Sleep(sleepCount+2000);
                                 cout << "Its platinum!!" <<endl;
                                 cout << endl;
                                 get<2>(Platinum)++;
@@ -237,7 +261,7 @@ void mining()
 
                         if (get<2>(Platinum) > 0)
                         {
-                            cout << "You found : " << get<2>(Platinum) << " shiny diamonds" << endl;
+                            cout << "You found : " << get<2>(Platinum) << " shiny platinum" << endl;
                         } 
                     }
                 }
@@ -247,7 +271,113 @@ void mining()
                 break;
             }
         }
-        else if (tunnel == 3 && energy > 0)
+        else if(tunnel == 2 && enterGold == false) // check gold
+        {
+            cout << "Your pickaxe is too weak to enter this cave!" << endl;
+            cout << "Please make or buy a stronger axe" << endl;
+        }
+        else if (tunnel == 2 && energy > 0) // gold tunnel
+        {
+            int decision;
+            cout << "Would you like to enter tunnel 1?" << endl;
+            cout << "(Please answer yes (1) or no (0)" << endl;
+            cin >> decision;
+            system("cls");
+
+            if (decision == 1)
+            {
+                int mine;
+                cout << "You see a shining piece on the rock walls" << endl;
+                cout << "How many times would you like to strike it?" << endl;
+                cout << "You have : " << energy << " left" << endl;
+                cout << endl;
+
+                cin >> usePick;
+
+                if(usePick <= (energy / 10))
+                {
+                    cout << "You will strike " << usePick << " times." << endl;
+                    cout << "This costs " << (usePick*10) << " energy" << endl;
+                    cout << "Would you like to continue?" << endl;
+                    cin >> mine;
+
+                    if (mine == 1)
+                    {
+                        system("cls");
+                        cout << "Mining..." << endl;
+                        Sleep(sleepCount);
+                        srand(time(0));
+                        for (i = 0; i <usePick; i++)
+                        {
+                            treasure = rand() % 9;
+
+                            if (treasure == 0 || treasure == 3 || treasure == 6)
+                            {
+                                Sleep(sleepCount + 500);
+                                cout << "You found dirt" << endl;
+                                cout << endl;
+                                get<2> (dirt)++;
+
+                            }
+                            else if (treasure == 1 || treasure == 4 || treasure == 7)
+                            {
+                                Sleep (sleepCount+1000);
+                                cout << "You found a nugget of gold!" << endl;
+                                cout << endl;
+                                get<2>(goldNugget)++;
+
+                            }
+                            else if (treasure == 2 || treasure == 5 || treasure == 9)
+                            {
+                                Sleep (sleepCount+1000);
+                                cout << "It appears there is something hard inside this rock..." << endl;
+                                Sleep (2000);
+                                cout << "You found a pack of gold!" << endl;
+                                cout << endl;
+                                get<2>(gold)++;
+                            }
+                            else 
+                            {
+                                Sleep(sleepCount+2000);
+                                cout << "What is this??" << endl;
+                                Sleep(2000);
+                                cout << "Its a diamond!!" <<endl;
+                                cout << endl;
+                                get<2>(diamond)++;
+                            }
+                        } 
+                        energy = (energy - (usePick*10));
+                        cout << "You have : " << energy << " energy left" << endl;
+                        cout << endl;
+
+                        cout << "You found : " << get<2>(dirt) << " chunks of dirt." << endl;
+                        cout << "You found : " << get<2>(goldNugget) << " pieces of gold nuggets." << endl;
+                        cout << "You found : " << get<2>(gold) << " chunks of gold." << endl;
+
+                        if (get<2>(diamond) > 0)
+                        {
+                            cout << "You found : " << get<2>(diamond) << " shiny diamonds" << endl;
+                        } 
+                    }
+                } 
+                else if (usePick > (energy / 10))
+                {
+                    system ("cls");
+                    cout << "You do not have enough energy to strike this many times" << endl;
+                    cout << "You have : " << energy << " or about " << (energy / 10) << " strikes" << endl;
+                }
+            }
+            else if (decision == 0)
+            {
+                break;
+            }
+        }
+        else if(tunnel == 3 && enterCrystal == false) // crytal tunnel check
+        {
+            cout << "Your pickaxe is too weak to enter this cave!" << endl;
+            cout << "Please make or buy a stronger axe" << endl;
+        }
+        else if (tunnel == 3 && energy > 0) // crystal tunnel
         {
             int decision;
             cout << "Would you like to enter tunnel 3?" << endl;
@@ -276,7 +406,7 @@ void mining()
                     {
                         system("cls");
                         cout << "Mining..." << endl;
-                        Sleep(1000);
+                        Sleep(sleepCount);
                         srand(time(0));
                         for (i = 0; i <usePick; i++)
                         {
@@ -284,14 +414,14 @@ void mining()
 
                             if (treasure == 19 || treasure == 20)
                             {
-                                Sleep(10000);
+                                Sleep(sleepCount+5000);
                                 cout << "You found an Aer Vis Crystal" << endl;
                                 cout << endl;
                                 get<2>(AVCrystal)++;
                             }
                             else if (treasure == 18 || treasure == 21)
                             {
-                                Sleep (5000);
+                                Sleep (sleepCount+5000);
                                 cout << "You found a diamond!" << endl;
                                 cout << endl;
                                 get<2>(diamond)++;
@@ -299,21 +429,21 @@ void mining()
                             }
                             else if (treasure == 17 || treasure == 22)
                             {
-                                Sleep (5000);
+                                Sleep (sleepCount+5000);
                                 cout << "You found Platinum" << endl;
                                 get<2>(Platinum)++;
                             }
                             else if(treasure == 23)
                             {
-                                Sleep (10000);
+                                Sleep (sleepCount+10000);
                                 cout << "Something red has shone out of the dirt" << endl;
-                                Sleep(10000);
+                                Sleep(sleepCount+10000);
                                 cout << "You found a ruby" << endl;
                                 get<2>(ruby)++;
                             }
                             else 
                             {
-                                Sleep(2000);
+                                Sleep(sleepCount+2000);
                                 cout << "You found dirt" << endl;
                                 get<2>(dirt)++;
                             }
@@ -378,6 +508,7 @@ void inventory()
         
         if (inventoryDecision == 1)
         {
+            checkPickaxe();
             system("cls");
             cout << "Dirt : " << get<2>(dirt) << endl;
             cout << "Gold Nuggets : " << get<2>(goldNugget) << endl;
@@ -387,12 +518,15 @@ void inventory()
             cout << "Aer Vis Crystals : " << get<2>(AVCrystal) << endl;
             cout << "Diamonds : " << get<2>(diamond) << endl;
             cout << "Platinum : " << get<2>(Platinum) << endl;
+            cout << endl;
+            cout << "Pickaxe type: " << pickaxeType << endl;
+            cout << endl;
         }
         else if (inventoryDecision == 2)
         {
+            system("cls");
             do
             {
-            system("cls");
             cout << "1. Chocolate Bar : " << get<2>(CBar) << endl;
             cout << "2. Salad : " << get<2>(Salad) << endl;
             cout << "3. Chicken Nuggets : " << get<2>(CNuggies) << endl;
@@ -409,7 +543,10 @@ void inventory()
                 break;
             }
             itemVariables(useItemChange);
-            usingItems(item, usingItem);
+            usingItems(item, itemEnergy);
+            cout << endl;
+            cout << "Would you like to use any other item?" << endl;
+            cin >> useItemChange;
             }while(useItemChange != 0);
         }
         else if (inventoryDecision == 0)
@@ -547,12 +684,11 @@ void selling(int sellAmount, int price, int choice)
     cin >> sellQuantity;
 
     checkSell = (sellAmount - sellQuantity);
-    if (product < 0)
+    if (checkSell < 0)
     {
         cout << "You do not have enough of this item" << endl << "Get some more in the mines!" << endl;
-        cout << money;
     }
-    else if (product >= 0)
+    else if (checkSell >= 0)
     {
         subtractItemCount(choice, sellQuantity);
         moneyAdd = sellQuantity*price;
@@ -661,7 +797,6 @@ void addItems(int buying, int choice, int product)
     {
         get<2>(CBar) = get<2>(CBar) + buying;
         money = money - product;
-        cout << "hehe";
     }
     else if (choice == 5)
     {
@@ -685,7 +820,7 @@ void addItems(int buying, int choice, int product)
     }
     else if (choice == 6)
     {
-        get<2> (stonePick) = true;
+        get<2> (stonePick) = 1;
         money = money - product;
     }
 }
@@ -718,30 +853,30 @@ void itemVariables(int useItemChange)
     if (useItemChange == 1)
     {
        item = get<2>(CBar);
-       usingItem = get<3>(CBar);
+       itemEnergy = get<3>(CBar);
     }
     else if (useItemChange == 2)
     {
         item = get<2>(Salad);
-        usingItem = get<3>(Salad);
+        itemEnergy = get<3>(Salad);
     }
     else if (useItemChange == 3)
     {
         item = get<2>(CNuggies);
-        usingItem = get<3>(CNuggies);
+        itemEnergy = get<3>(CNuggies);
     }
     else if(useItemChange == 4)
     {
         item = get<2>(Sandwhich);
-        usingItem = get<3>(Sandwhich);
+        itemEnergy = get<3>(Sandwhich);
     }
     else if(useItemChange == 5)
     {
         item = get<2>(BBox);
-        usingItem = get<3>(BBox);
+        itemEnergy = get<3>(BBox);
     }  
 }
-void usingItems(int item, int usingItem)
+void usingItems(int item, int itemEnergy)
 {
     cout << "How much would you like to use?" << endl;
     cin >> itemCount;
@@ -754,8 +889,138 @@ void usingItems(int item, int usingItem)
     else if (itemCount <= item)
     {
         subtractItem(useItemChange, itemCount);
-        energy += usingItem;
-        cout << "You restored " << usingItem << " energy." << endl;
+        energy = energy + itemEnergy;
+        cout << "You restored " << itemEnergy << " energy." << endl;
         cout << "You now have " << energy << " energy" << endl;
     }   
 }
+
+void hotelVariables(int hotelStay)
+{
+    if(hotelStay == 1)
+    {
+        hotelEnergy = 5;
+        hotelCost = 2;
+    }
+    else if(hotelStay == 2)
+    {
+        hotelEnergy = 10;
+        hotelCost = 7;
+    }
+    else if(hotelStay == 3)
+    {
+        hotelEnergy = 20;
+        hotelCost = 15;
+    }
+    else if(hotelStay == 4)
+    {
+        hotelEnergy = 30;
+        hotelCost = 25;
+    }
+    else if(hotelStay == 5)
+    {
+        hotelEnergy = 35;
+        hotelCost = 30;
+    }
+}
+void hotel()
+{
+    system("cls");
+    do
+    {
+        cout << "Welcome to the Miner Hotel!" << endl;
+        cout << "Which suite would you like to stay in?" << endl; 
+        cout << "You have $"<<  money;
+        cout << endl;
+        cout << "1. Stone Suite     || 5 energy per night  || $2 per night" << endl;
+        cout << "2. Iron Suite      || 10 energy per night || $7 per night" << endl;
+        cout << "3. Golden Suite    || 20 energy per night || $15 per night" << endl;
+        cout << "4. Diamond Suite   || 30 energy per night || $25 per night" << endl;
+        cout << "5. Platinum Suite  || 35 energy per night || $30 per night" << endl;
+        cout << endl;
+        cout << "0. Exit" << endl;
+        cout << endl;
+        cin >> hotelStay;
+        if (hotelStay == 0)
+        {
+            break;
+        }
+        hotelVariables(hotelStay);
+        cout << "How long would you like to stay?" << endl;
+        cin >> hotelStayLength;
+
+        if (hotelStayLength*hotelCost <= money)
+        {
+            int i;
+            cout << "Sleeping..." << endl;
+            for (i = 0; i < hotelStayLength; i++)
+            {
+                Sleep(500);
+                energy = energy + hotelEnergy;
+                money = money - hotelCost;
+                cout << "Night : " << i+1 << endl;
+            }
+            cout << "You now have " << energy << " energy" << endl;
+            cout << "You have $" << money << endl;
+            cout << endl;
+        }
+        else if (hotelStayLength*hotelCost > money)
+        {
+            cout << "You do not have enough money!" << endl;
+            cout << "Please choose less nights or a cheaper suite" << endl;
+        }
+        cout << "Would you like to go back to the main menu?" << endl;
+        cin >> hotelStay;
+        if (hotelStay == 0)
+        {
+            break;
+        }
+        else 
+        {
+            system("cls");
+        }
+    }while(hotelStay != 0);
+}
+
+void hunt()
+{
+    cout << "Would you like to enter the hunting grounds?" << endl;
+    cin >> huntDecision;
+    system("cls");
+    if (huntDecision == 1)
+    {
+        do
+        {
+            cout << "Please choose a hunting station" << endl;
+            cout << endl;
+            cout << "1. Rabbit Holes" <<endl;
+            // cout << "2. Pheasant Fields" << endl;
+            //cout << "3. Deerful Woods" << endl;
+            cin >> huntStation;
+            cout << endl;
+            if (huntStation == 1)
+            {
+                cout << "This costs  15 Energy to play" << endl;
+                cout << "Would you like to continue?" << endl;
+                cin >> huntDecision;
+                if (huntDecision == 0)
+                {
+                    break;
+                }
+                if (energy < 15)
+                {
+                    noEnergy = true;
+                    break;
+                }
+                energy = energy - 15;
+                
+                guessTheNumber();
+            }
+        }while (huntDecision != 0);
+        if (noEnergy == true)
+        {
+            cout << "You do no have enough energy is to hunt!" << endl;
+        }
+    }
+}
+
